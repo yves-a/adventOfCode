@@ -43,13 +43,29 @@ def backtrack_find_highest_value(s):
     return maxV
 
 
+def greedy_approach(s):
+    k = 12
+    stack = []
+
+    left_to_drop = len(s) - k
+
+    for digit in s:
+        while left_to_drop > 0 and stack and int(stack[-1]) < int(digit):
+            stack.pop()
+            left_to_drop -= 1
+        stack.append(digit)
+
+    res = stack[:k]
+    return int("".join(res))
+
+
 if __name__ == "__main__":
     lines = read_input(input_path)
     finalSum = 0
     for line in lines:
         # v = find_highest_value(str(line))
-        v = backtrack_find_highest_value(str(line))
-        print(v)
+        # v = backtrack_find_highest_value(str(line))
+        v = greedy_approach(str(line))
         finalSum += v
 
     print(finalSum)
